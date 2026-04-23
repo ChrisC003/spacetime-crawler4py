@@ -19,35 +19,32 @@ def extract_next_links(url, resp):
     #         resp.raw_response.content: the content of the page!
     # Return a list with the hyperlinks (as strings) scrapped from resp.raw_response.content
 
-    links = []
+	links = []
 
-    if resp.status != 200:
-        return links
+	if resp.status != 200:
+		return links
 
-    if not resp.raw_response or not resp.raw_response.content:
-        return links
+	if not resp.raw_response or not resp.raw_response.content:
+		return links
 
-    soup = BeautifulSoup(resp.raw_response.content, "html.parser")
+	soup = BeautifulSoup(resp.raw_response.content, "html.parser")
 
 
-    for obj in soup.find_all("a", href = True):
-        links.append(obj["href"])
+	for obj in soup.find_all("a", href = True):
+		links.append(obj["href"])
 
-    return links
+	return links
 
 def is_valid(url):
     # Decide whether to crawl this url or not. 
     # If you decide to crawl it, return True; otherwise return False.
     # There are already some conditions that return False.
     try:
-
-        allowed = ("ics.uci.edu", "cs.uci.edu", "informatics.uci.edu", "stat.uci.edu")
-        parsed = urlparse(url)
-        if parsed.scheme not in set(["http", "https"]):
-            return False
-
-        if parsed.hostname not in allowed:
-            return False
+		parsed = urlparse(url)
+		if parsed.scheme not in set(["http", "https"]):
+			return False
+	if not (parsed.hostname.endswith(("ics.uci.edu", "cs.uci.edu", "informatics.uci.edu", "stat.uci.edu")):
+		return False
 
         return not re.match(
             r".*\.(css|js|bmp|gif|jpe?g|ico"
