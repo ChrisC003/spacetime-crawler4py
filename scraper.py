@@ -11,6 +11,8 @@ def scraper(url, resp):
     #Unsure if we need to check for robots since we are operating on a cache, and there is already system code 608 for not allowed
     if url not in visited:
         visited.add(url)
+    else: #If already visited don't visit again
+        return []
     links = extract_next_links(url, resp)
     return [link for link in links if is_valid(link)]
 
