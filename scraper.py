@@ -1,8 +1,16 @@
 import re
-from urllib.parse import urlparse
+from urllib.parse import urlparse, urljoin, urldefrag
 from bs4 import BeautifulSoup
 
+#This could be moved into another file maybe to have control over it
+visited = set()
+longest_file = list() #Probably an ordered pair containing the url, and the length as the second  unit
+
+
 def scraper(url, resp):
+    #Unsure if we need to check for robots since we are operating on a cache, and there is already system code 608 for not allowed
+    if url not in visited:
+        visited.add(url)
     links = extract_next_links(url, resp)
     return [link for link in links if is_valid(link)]
 
@@ -24,14 +32,16 @@ def extract_next_links(url, resp):
     if resp.status != 200:
         return links
 
-    if not resp.raw_response or not resp.raw_response.content:
+    if not resp.raw_response or not resp.raw_response.content: #If there's no raw response content nothing
         return links
 
     soup = BeautifulSoup(resp.raw_response.content, "html.parser")
 
 
     for obj in soup.find_all("a", href = True):
-        links.append(obj["href"])
+        link = urljoin(url, obj["href"])
+        link, _ = urldefrag(link)
+        links.append(link)
 
     return links
 
@@ -40,6 +50,7 @@ def is_valid(url):
     # If you decide to crawl it, return True; otherwise return False.
     # There are already some conditions that return False.
     try:
+		#Need to consider traps, I know the calender for sure is one
 
         allowed = ("ics.uci.edu", "cs.uci.edu", "informatics.uci.edu", "stat.uci.edu")
         parsed = urlparse(url)
