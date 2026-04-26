@@ -75,9 +75,8 @@ def is_valid(url):
             return False
         rp = get_robot_parser(url)
 
-		if rp is not None:
-
-		    if rp.disallow_all: #Kinda basic robot parser
+        if rp is not None:
+            if rp.disallow_all: #Kinda basic robot parser
                 return False
             elif not rp.can_fetch("*", url):
                 return False
