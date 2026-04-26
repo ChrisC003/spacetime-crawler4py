@@ -1,11 +1,14 @@
 import re
 from urllib.parse import urlparse, urljoin, urldefrag
+from urllib.robotparser import RobotFileParser
 from bs4 import BeautifulSoup
 from tokenizer import tokenize
 
 #frontier.py already has a thing checking if you've been to a page or not, could add a seen thing here to optimize it a bit more
 seen = set() #Length of this is "unique pages" found
 subdomains = dict()
+robot_cache = {}
+
 
 def scraper(url, resp):
     #Unsure if we need to check for robots since we are operating on a cache, and there is already system code 608 for not allowed
@@ -70,6 +73,9 @@ def is_valid(url):
             for domain in allowed
         ):
             return False
+        rp = get_robot_parser(url)
+        if not rp.can_fetch("*", url):
+            return False
 
         return not re.match(
             r".*\.(css|js|bmp|gif|jpe?g|ico"
@@ -84,3 +90,14 @@ def is_valid(url):
     except TypeError:
         print ("TypeError for ", parsed)
         raise
+
+def get_robot_parser(url):
+    parsed = urlparse(url)
+    if parsed.hostname.lower() in robot_cache:
+        return robot_cache[parsed.hostname.lower()]
+    rp = RobotFileParser()
+    robot_url = f"{parsed.scheme}://{parsed.netloc}/robots.txt"
+    rp.set_url(robot_url)
+    rp.read()
+    robot_cache[parsed.hostname.lower()] = rp
+    return rp
