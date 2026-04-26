@@ -6,13 +6,14 @@ from tokenizer import tokenize
 
 #frontier.py already has a thing checking if you've been to a page or not, could add a seen thing here to optimize it a bit more
 seen = set() #Length of this is "unique pages" found
-subdomains = dict()
+subdomains = {"ics.uci.edu":1, "cs.uci.edu":1, "informatics.uci.edu":1, "stat.uci.edu":1}
 robot_cache = {}
 
 
 def scraper(url, resp):
     #Unsure if we need to check for robots since we are operating on a cache, and there is already system code 608 for not allowed
     links = extract_next_links(url, resp)
+   # print(subdomains)
     return [link for link in links if is_valid(link)]
 
 #Is robots already handled by 608 since we're on a cache server?
@@ -42,17 +43,24 @@ def extract_next_links(url, resp):
     for obj in soup.find_all("a", href = True):
         link = urljoin(url, obj["href"])
         link, _ = urldefrag(link)
+        seen.add(link) #Once you've seen and defragged it add it into seen
         links.append(link)
+        parsed = urlparse(link)
+
+        hostname = parsed.hostname
+        if hostname is None: #If not a parsable link
+            continue
+        else:
+            hostname = hostname.lower()
+            if hostname.endswith(".uci.edu"):
+                subdomains[hostname] = subdomains.get(hostname, 0) + 1
+    
 	
     tokenize(url, resp.raw_response.content)
 
     defrag = urldefrag(url)
-    seen.add(defrag) #If it's proccessed a page, it should count as being visisted ig
+    seen.add(defrag) #Add the page you just scraped, msotly for the beginning few
 
-    if defrag in subdomains: #Keeping track of the subdomain
-        subdomains[defrag] += 1
-    else:
-        subdomains[defrag] = 1
     
     return links
 
@@ -102,6 +110,9 @@ def get_robot_parser(url):
     rp = RobotFileParser()
     robot_url = f"{parsed.scheme}://{parsed.netloc}/robots.txt"
     rp.set_url(robot_url)
-    rp.read()
+    try:
+        rp.read()
+    except Exception:
+        pass
     robot_cache[parsed.hostname.lower()] = rp
     return rp
