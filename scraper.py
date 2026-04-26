@@ -1,6 +1,7 @@
 import re
 from urllib.parse import urlparse, urljoin, urldefrag
 from bs4 import BeautifulSoup
+from tokenizer import tokenize
 
 #This could be moved into another file maybe to have control over it
 visited = set()
@@ -44,6 +45,8 @@ def extract_next_links(url, resp):
         link = urljoin(url, obj["href"])
         link, _ = urldefrag(link)
         links.append(link)
+	
+    tokenize(resp.raw_response.content)
 
     return links
 
