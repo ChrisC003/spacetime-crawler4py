@@ -74,7 +74,13 @@ def is_valid(url):
         ):
             return False
         rp = get_robot_parser(url)
-        if not rp.can_fetch("*", url):
+
+		if rp is None:
+            return False
+
+		if rp.disallow_all: #Kinda basic robot parser
+            return False
+        elif not rp.can_fetch("*", url):
             return False
 
         return not re.match(
