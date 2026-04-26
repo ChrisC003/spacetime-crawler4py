@@ -1,6 +1,7 @@
 from bs4 import BeautifulSoup
 import re
 word_count = {}
+longest_page = ("", 0)
 stopwords = {'a', 'about', 'above', 'after', 'again', 'against', 'all', 'am', 'an', 'and', 'any',
              'are', 'as', 'at', 'be', 'because', 'been', 'before', 'being', 'below', 'between', 'both',
              'but', 'by', 'can', 'could', 'did', 'do', 'does', 'doing', 'down', 'during', 'each', 'few', 
@@ -13,7 +14,9 @@ stopwords = {'a', 'about', 'above', 'after', 'again', 'against', 'all', 'am', 'a
              'very', 'was', 'we', 'were', 'what', 'when', 'where', 'which', 'while', 'who', 'whom', 'why', 'will', 
              'with', 'would', 'you', 'your', 'yours', 'yourself', 'yourselves'}
 
-def tokenize(fileText):
+def tokenize(url, fileText):
+    global longest_page
+
     try:
         soup = BeautifulSoup(fileText, "lxml")
     except Exception:
@@ -25,10 +28,13 @@ def tokenize(fileText):
     base_text = soup.get_text(separator = ' ', strip = True) #Get the actual text from remaining tags
     words = re.findall(r'\b[a-z0-9]+\b', base_text.lower()) #Seperate it based off of alphanumeric English
     
+    if len(words) > longest_page[1]: #Do this before tokenizing, you want to include the stopwords
+        longest_page = (url, len(words))
+
     tokens = [word for word in words if (word not in stopwords and len(word) > 1)] #Must not be a stopword for a single char
    
     computeWordFrequencies(tokens) #Add to dict
-
+    
     return tokens #There's not really a need to return it now that I think about it
 
 
@@ -47,6 +53,6 @@ def freq_print(freqCount):
     freqCount = dict(sorted(freqCount.items(), key=lambda item: (-item[1], item[0]))) #sort it by frequency (high to low) then alphabetical
     counter = 0
     for key, value in freqCount.items():
-        if(counter < 10):
+        if(counter < 50):
             print(key + " - " + str(value))
         counter += 1

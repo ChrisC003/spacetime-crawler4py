@@ -3,17 +3,12 @@ from urllib.parse import urlparse, urljoin, urldefrag
 from bs4 import BeautifulSoup
 from tokenizer import tokenize
 
-#This could be moved into another file maybe to have control over it
-visited = set()
-longest_file = list() #Probably an ordered pair containing the url, and the length as the second  unit
-
+#frontier.py already has a thing checking if you've been to a page or not, could add a seen thing here to optimize it a bit more
+seen = set() #Length of this is "unique pages" found
+subdomains = dict()
 
 def scraper(url, resp):
     #Unsure if we need to check for robots since we are operating on a cache, and there is already system code 608 for not allowed
-    if url not in visited:
-        visited.add(url)
-    else: #If already visited don't visit again
-        return []
     links = extract_next_links(url, resp)
     return [link for link in links if is_valid(link)]
 
@@ -25,7 +20,7 @@ def extract_next_links(url, resp):
     # resp.url: the actual url of the page
     # resp.status: the status code returned by the server. 200 is OK, you got the page. Other numbers mean that there was some kind of problem.
     # resp.error: when status is not 200, you can check the error here, if needed.
-    # resp.raw_response: this is where the page actually is. More specifically, the raw_response has two parts:
+    # resp.raw_response: this is where the page actually is. More specifically, the raw_response has two parts:c
     #         resp.raw_response.url: the url, again
     #         resp.raw_response.content: the content of the page!
     # Return a list with the hyperlinks (as strings) scrapped from resp.raw_response.content
@@ -46,8 +41,16 @@ def extract_next_links(url, resp):
         link, _ = urldefrag(link)
         links.append(link)
 	
-    tokenize(resp.raw_response.content)
+    tokenize(url, resp.raw_response.content)
 
+    defrag = urldefrag(url)
+    seen.add(defrag) #If it's proccessed a page, it should count as being visisted ig
+
+    if defrag in subdomains: #Keeping track of the subdomain
+        subdomains[defrag] += 1
+    else:
+        subdomains[defrag] = 1
+    
     return links
 
 def is_valid(url):
@@ -62,7 +65,10 @@ def is_valid(url):
         if parsed.scheme not in set(["http", "https"]):
             return False
 
-        if parsed.hostname not in allowed:
+        if not any(
+            parsed.hostname.lower() == domain or parsed.hostname.lower().endswith("." + domain) #Either the domain directly contains it, or it ends with the domain
+            for domain in allowed
+        ):
             return False
 
         return not re.match(
