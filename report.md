@@ -1,0 +1,182 @@
+# CS121 Web Crawler Report
+
+1. Unique pages found: 5709
+
+2. Longest page by word count:
+   - URL: https://cml.ics.uci.edu/category/aiml
+   - Word count: 25455
+
+3. Top 50 words excluding English stop words:
+   1. ramesh, 13397
+   2. research, 12815
+   3. data, 11315
+   4. ics, 9632
+   5. information, 9571
+   6. uci, 9510
+   7. computer, 9121
+   8. jain, 8502
+   9. students, 8039
+   10. learning, 7642
+   11. current, 7157
+   12. 10, 7128
+   13. search, 7124
+   14. university, 7121
+   15. computing, 6815
+   16. science, 6418
+   17. systems, 6381
+   18. past, 6328
+   19. news, 6161
+   20. events, 6124
+   21. us, 5984
+   22. read, 5409
+   23. pdf, 5289
+   24. software, 5152
+   25. irvine, 5111
+   26. courses, 4912
+   27. project, 4903
+   28. time, 4793
+   29. machine, 4584
+   30. projects, 4542
+   31. people, 4475
+   32. books, 4423
+   33. companies, 4370
+   34. new, 4213
+   35. 2026, 4196
+   36. using, 4150
+   37. vision, 4068
+   38. theme, 3988
+   39. favorite, 3980
+   40. edu, 3862
+   41. experiential, 3847
+   42. home, 3819
+   43. one, 3749
+   44. conference, 3742
+   45. may, 3658
+   46. years, 3657
+   47. contact, 3646
+   48. navigation, 3624
+   49. management, 3610
+   50. student, 3583
+
+4. Subdomains found: 92
+
+   - accessibility.ics.uci.edu, 5
+   - acoi.ics.uci.edu, 108
+   - archive-beta.ics.uci.edu, 7
+   - archive.ics.uci.edu, 184
+   - asterix.ics.uci.edu, 6
+   - betapro.proteomics.ics.uci.edu, 1
+   - cdb.ics.uci.edu, 5
+   - cert.ics.uci.edu, 17
+   - checkin.ics.uci.edu, 3
+   - chenli.ics.uci.edu, 9
+   - cloudberry.ics.uci.edu, 4
+   - cml.ics.uci.edu, 191
+   - code.ics.uci.edu, 14
+   - computableplant.ics.uci.edu, 63
+   - courselisting.ics.uci.edu, 2
+   - create.ics.uci.edu, 7
+   - cs.ics.uci.edu, 9
+   - dale-cooper-v0.ics.uci.edu, 3
+   - deeprxn.ics.uci.edu, 30
+   - dgillen.ics.uci.edu, 29
+   - ds4all.ics.uci.edu, 9
+   - duttgroup.ics.uci.edu, 126
+   - dynamo.ics.uci.edu, 25
+   - edgelab.ics.uci.edu, 7
+   - emj.ics.uci.edu, 31
+   - evoke.ics.uci.edu, 4
+   - flamingo.ics.uci.edu, 9
+   - fr.ics.uci.edu, 3
+   - futurehealth.ics.uci.edu, 149
+   - gitlab.ics.uci.edu, 2
+   - grape.ics.uci.edu, 456
+   - graphics.ics.uci.edu, 1
+   - hobbes.ics.uci.edu, 9
+   - hpi.ics.uci.edu, 5
+   - hub.ics.uci.edu, 1
+   - i-sensorium.ics.uci.edu, 4
+   - icde2023.ics.uci.edu, 44
+   - ics.uci.edu, 366
+   - industryshowcase.ics.uci.edu, 22
+   - informatics.ics.uci.edu, 15
+   - informatics.uci.edu, 1
+   - intranet.ics.uci.edu, 1
+   - ipubmed.ics.uci.edu, 1
+   - isg.ics.uci.edu, 208
+   - jgarcia.ics.uci.edu, 38
+   - julia-hub.ics.uci.edu, 1
+   - luci.ics.uci.edu, 4
+   - mailman.ics.uci.edu, 35
+   - mcs.ics.uci.edu, 11
+   - mdogucu.ics.uci.edu, 1
+   - mds.ics.uci.edu, 9
+   - mhcid.ics.uci.edu, 17
+   - mlphysics.ics.uci.edu, 1
+   - mover.ics.uci.edu, 18
+   - mswe.ics.uci.edu, 8
+   - mupro.proteomics.ics.uci.edu, 2
+   - myip.ics.uci.edu, 1
+   - nalini.ics.uci.edu, 7
+   - ngs.ics.uci.edu, 1952
+   - oai.ics.uci.edu, 6
+   - password.ics.uci.edu, 5
+   - pepito.proteomics.ics.uci.edu, 3
+   - psearch.ics.uci.edu, 1
+   - radicle.ics.uci.edu, 5
+   - riscit.ics.uci.edu, 2
+   - scale.ics.uci.edu, 6
+   - scratch.proteomics.ics.uci.edu, 2
+   - seal.ics.uci.edu, 43
+   - selectpro.proteomics.ics.uci.edu, 4
+   - sherlock.ics.uci.edu, 7
+   - speedtest.ics.uci.edu, 1
+   - staging-hub.ics.uci.edu, 1
+   - stairs.ics.uci.edu, 3
+   - stat.ics.uci.edu, 8
+   - stat.uci.edu, 1
+   - summeracademy.ics.uci.edu, 11
+   - support.ics.uci.edu, 1
+   - swiki.ics.uci.edu, 8
+   - tad.ics.uci.edu, 1
+   - tastier.ics.uci.edu, 1
+   - tutoring.ics.uci.edu, 5
+   - unite.ics.uci.edu, 10
+   - vision.ics.uci.edu, 211
+   - wics.ics.uci.edu, 225
+   - wiki.ics.uci.edu, 117
+   - www-db.ics.uci.edu, 22
+   - www.cs.uci.edu, 2
+   - www.ics.uci.edu, 674
+   - www.informatics.ics.uci.edu, 1
+   - www.informatics.uci.edu, 12
+   - www.stat.uci.edu, 3
+   - xtune.ics.uci.edu, 6
+
+
+## Other Information
+- Failed URLs recorded: 1525
+- Trap URLs recorded: 21016
+- Missing saved files: 0
+
+Top trap reasons:
+   - bad_file_extension: 7743
+   - trap_keyword:dokuwiki_generated: 7598
+   - similarity:exact_duplicate: 1007
+   - low_information:login_template: 995
+   - trap_keyword:wiki_timeline: 740
+   - low_information:access_restricted: 600
+   - similarity:simhash_duplicate: 434
+   - trap_keyword:format_query: 383
+   - trap_keyword:share: 334
+   - trap_keyword:wiki_revision_query: 270
+   - robots_disallowed: 169
+   - trap_keyword:directory_listing_sort: 164
+   - low_information:too_few_words: 136
+   - trap_keyword:raw-attachment: 88
+   - too_many_query_params: 65
+   - low_value_content_type:application/zip: 56
+   - low_information:directory_listing: 41
+   - trap_keyword:helpdesk_ticket_login: 39
+   - trap_keyword:filter: 28
+   - trap_keyword:event_archive_date: 25

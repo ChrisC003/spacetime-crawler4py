@@ -108,3 +108,13 @@ venv.bak/
 
 *.full.py
 *.shelve
+
+# our test framework
+.DS_Store
+*.DS_Store
+states/
+temp/
+test/
+reports/
+deleted/
+pages/

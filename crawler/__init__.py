@@ -11,9 +11,10 @@ class Crawler(object):
         self.worker_factory = worker_factory
 
     def start_async(self):
+        thread_count = min(self.config.threads_count, 4)
         self.workers = [
             self.worker_factory(worker_id, self.config, self.frontier)
-            for worker_id in range(self.config.threads_count)]
+            for worker_id in range(thread_count)]
         for worker in self.workers:
             worker.start()
 
